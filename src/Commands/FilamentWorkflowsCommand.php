@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Tschucki\FilamentWorkflows\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentWorkflowsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-workflows';
 
     public $description = 'My command';
 

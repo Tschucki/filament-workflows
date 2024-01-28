@@ -28,16 +28,10 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('tschucki/filament-workflows');
@@ -123,9 +117,7 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            FilamentWorkflowsCommand::class,
-        ];
+        return [];
     }
 
     /**
@@ -158,7 +150,7 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-workflows_table',
+            'create_filament-workflow_tables',
         ];
     }
 

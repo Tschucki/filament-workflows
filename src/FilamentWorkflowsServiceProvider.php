@@ -2,7 +2,6 @@
 
 namespace Tschucki\FilamentWorkflows;
 
-use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
@@ -14,10 +13,15 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Tschucki\FilamentWorkflows\Commands\FilamentWorkflowsCommand;
+use Tschucki\FilamentWorkflows\Concerns\CanSetupWorkflows;
+use Tschucki\FilamentWorkflows\Concerns\InteractsWithWorkflow;
+use Tschucki\FilamentWorkflows\Observers\ModelObserver;
 use Tschucki\FilamentWorkflows\Testing\TestsFilamentWorkflows;
 
 class FilamentWorkflowsServiceProvider extends PackageServiceProvider
 {
+    use CanSetupWorkflows;
+
     public static string $name = 'filament-workflows';
 
     public static string $viewNamespace = 'filament-workflows';
@@ -60,6 +64,12 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+    }
+
+    public function boot(): void
+    {
+        parent::boot();
+        $this->registerGlobalObservers();
     }
 
     public function packageBooted(): void
@@ -150,5 +160,12 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
         return [
             'create_filament-workflows_table',
         ];
+    }
+
+    protected function registerGlobalObservers(): void
+    {
+        self::getAllModelsWithTrait(InteractsWithWorkflow::class)->each(function ($model) {
+            $model::observe(ModelObserver::class);
+        });
     }
 }

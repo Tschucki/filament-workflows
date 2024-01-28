@@ -7,12 +7,15 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Tschucki\FilamentWorkflows\Models\FilamentWorkflow;
+use Tschucki\FilamentWorkflows\Concerns\CanSetupWorkflows;
+use Tschucki\FilamentWorkflows\Models\Workflow;
 use Tschucki\FilamentWorkflows\Resources\FilamentWorkflowResource\Pages;
 
 class FilamentWorkflowResource extends Resource
 {
-    protected static ?string $model = FilamentWorkflow::class;
+    use CanSetupWorkflows;
+
+    protected static ?string $model = Workflow::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -22,14 +25,47 @@ class FilamentWorkflowResource extends Resource
             ->schema([
                 Forms\Components\Tabs::make()->schema([
                     Forms\Components\Tabs\Tab::make('Basic')->schema([
+                        Forms\Components\Select::make('model_type')->searchable()->reactive()->options(self::getModelTypeOptions())->required(),
+                        Forms\Components\Select::make('model_id')->searchable()->options(fn (Forms\Get $get) => $get('model_type') ? self::getModelOptions(app($get('model_type'))) : [])->nullable(),
                         Forms\Components\TextInput::make('title')->autofocus()->required(),
                         Forms\Components\Toggle::make('enabled')->inline(false)->default(true)->required(),
                         Forms\Components\Textarea::make('description')->nullable(),
                     ]),
                     Forms\Components\Tabs\Tab::make('Trigger')->schema([
-                        Forms\Components\Select::make('trigger_type')->label('Trigger Type'),
+                        Forms\Components\Repeater::make('trigger')->schema(fn (Forms\Get $get) => [
+                            Forms\Components\Select::make('event')->label('Event')->options([
+                                'created' => 'created',
+                                'updated' => 'updated',
+                                'deleted' => 'deleted',
+                                'restored' => 'restored',
+                                'forceDeleted' => 'forceDeleted',
+                            ])->reactive()->required(),
+                            Forms\Components\Group::make()->schema([
+                                Forms\Components\Repeater::make('triggers')->schema([
+                                    Forms\Components\Fieldset::make('Trigger Definition')->schema([
+                                        Forms\Components\Select::make('field')->reactive()->label('Field')->options(fn () => $get('model_type') ? self::getModelFields(app($get('model_type'))) : [])->nullable(),
+                                        Forms\Components\Select::make('operator')->label('Operator')->options([
+                                            '===' => '===',
+                                            '==' => '==',
+                                            '!=' => '!=',
+                                            '!==' => '!==',
+                                            '>' => '>',
+                                            '<' => '<',
+                                            '>=' => '>=',
+                                            '<=' => '<=',
+                                        ])->nullable(),
+                                        Forms\Components\TextInput::make('value')->label('Value')->nullable(),
+                                    ])->columns(3),
+                                ]),
+                            ])->visible(fn (Forms\Get $get) => $get('event') !== 'deleted'),
+                        ])->maxItems(1)->minItems(1)->columns(1),
                     ]),
-                ])->columnSpanFull()
+                    Forms\Components\Tabs\Tab::make('Actions')->label('Actions')->schema([
+                        Forms\Components\Repeater::make('actions')->schema([
+                            Forms\Components\Select::make('action_class')->label('Action')->options(self::getActionOptions())->required(),
+                        ])->columns(1),
+                    ]),
+                ])->columnSpanFull(),
             ]);
     }
 

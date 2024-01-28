@@ -35,6 +35,16 @@ php artisan vendor:publish --tag="filament-workflows-migrations"
 php artisan migrate
 ```
 
+Register the plugin in your `AdminPanelServiceProvider`:
+
+```php
+use Tschucki\FilamentWorkflows\FilamentWorkflowsPlugin;
+
+->plugins([
+    FilamentWorkflowsPlugin::make()
+])
+```
+
 ## Usage
 ### Basics
 In order to let your models use workflows, you need to add the `InteractsWithWorkflows` trait to your model. By adding this trait, the plugin will automatically add a global observer to your model. So when ever a workflow matches the event and trigger conditions, the workflow will execute the actions.

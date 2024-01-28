@@ -29,7 +29,7 @@ class FilamentWorkflowResource extends Resource
                     Forms\Components\Tabs\Tab::make('Trigger')->schema([
                         Forms\Components\Select::make('trigger_type')->label('Trigger Type'),
                     ]),
-                ])->columnSpanFull()
+                ])->columnSpanFull(),
             ]);
     }
 

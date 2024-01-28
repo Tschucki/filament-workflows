@@ -12,7 +12,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Tschucki\FilamentWorkflows\Commands\FilamentWorkflowsCommand;
 use Tschucki\FilamentWorkflows\Concerns\CanSetupWorkflows;
 use Tschucki\FilamentWorkflows\Concerns\InteractsWithWorkflow;
 use Tschucki\FilamentWorkflows\Observers\ModelObserver;

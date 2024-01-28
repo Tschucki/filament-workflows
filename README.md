@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tschucki/filament-workflows.svg?style=flat-square)](https://packagist.org/packages/tschucki/filament-workflows)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/tschucki/filament-workflows/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/tschucki/filament-workflows/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/tschucki/filament-workflows/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/tschucki/filament-workflows/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Fix PHP Code Styling](https://github.com/Tschucki/filament-workflows/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/Tschucki/filament-workflows/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/tschucki/filament-workflows.svg?style=flat-square)](https://packagist.org/packages/tschucki/filament-workflows)
 
 This plugin lets you add workflows to your filament app. You can attach triggers and dispatchable actions to your

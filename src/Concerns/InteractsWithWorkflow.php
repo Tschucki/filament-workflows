@@ -45,4 +45,9 @@ trait InteractsWithWorkflow
 
         return $workflowExists && $workflowIsEnabled && $workflowModelId;
     }
+
+    public function getTitleColumnForWorkflowSearch(): ?string
+    {
+        return null;
+    }
 }

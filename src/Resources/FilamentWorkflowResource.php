@@ -26,7 +26,7 @@ class FilamentWorkflowResource extends Resource
                 Forms\Components\Tabs::make()->schema([
                     Forms\Components\Tabs\Tab::make('Basic')->schema([
                         Forms\Components\Select::make('model_type')->searchable()->reactive()->options(self::getModelTypeOptions())->required(),
-                        Forms\Components\Select::make('model_id')->searchable()->options(fn (Forms\Get $get) => $get('model_type') ? self::getModelOptions(app($get('model_type'))) : [])->nullable(),
+                        Forms\Components\Select::make('model_id')->searchable()->getSearchResultsUsing(fn (Forms\Get $get, ?string $search) => $get('model_type') ? self::getModelOptions(app($get('model_type')), $search) : [])->nullable(),
                         Forms\Components\TextInput::make('title')->autofocus()->required(),
                         Forms\Components\Toggle::make('enabled')->inline(false)->default(true)->required(),
                         Forms\Components\Textarea::make('description')->nullable(),

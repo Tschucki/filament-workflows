@@ -3,9 +3,11 @@
 namespace Tschucki\FilamentWorkflows\Concerns;
 
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Tschucki\FilamentWorkflows\WorkflowActions\BaseAction;
 
 trait CanSetupWorkflows
@@ -96,14 +98,25 @@ trait CanSetupWorkflows
         });
     }
 
-    public static function getModelOptions(?Model $model)
+    public static function getModelOptions(?Model $model, string $search = ''): array
     {
         if (! $model) {
             return [];
         }
 
         if (self::modelUsesTrait($model, InteractsWithWorkflow::class)) {
-            return $model::all()->mapWithKeys(function ($model, $key) {
+            $iMaxResults = config('workflows.search.results', 100);
+            $searchableColumn = $model->getTitleColumnForWorkflowSearch();
+
+            if (! empty($search)) {
+                return $model::where('id', 'LIKE', '%' . $search . '%')->when($searchableColumn !== null, fn (Builder $query) => $query->orWhere($searchableColumn, 'LIKE', '%' . $search . '%'))->take($iMaxResults)->get()->mapWithKeys(function ($model, $key) {
+                    return [
+                        $model->getKey() => $model->getTitelAttributeForWorkflow(),
+                    ];
+                });
+            }
+
+            return $model::take($iMaxResults)->get()->mapWithKeys(function ($model) {
                 return [
                     $model->getKey() => $model->getTitelAttributeForWorkflow(),
                 ];
@@ -122,7 +135,7 @@ trait CanSetupWorkflows
         if (self::modelUsesTrait($model, InteractsWithWorkflow::class)) {
             $table = $model->getTable();
 
-            return collect(\Schema::getColumnListing($table))->mapWithKeys(function ($column) {
+            return collect(Schema::getColumnListing($table))->mapWithKeys(function ($column) {
                 return [
                     $column => $column,
                 ];

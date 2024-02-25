@@ -8,6 +8,24 @@
 This plugin lets you add workflows to your filament app. You can attach triggers and dispatchable actions to your
 workflows. The plugin will automatically execute the actions when the trigger conditions are met.
 
+## Table of Contents
+
+- [Images](#images)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Basics](#basics)
+    - [Add the trait to your model](#add-the-trait-to-your-model)
+    - [Create an Action](#create-an-action)
+- [Configuration](#configuration)
+    - [Define searchable field](#define-searchable-field)
+    - [Max Search Results](#max-search-results)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [License](#license)
+
 ## Images
 
 ![Screenshot 1](.github/images/Basic-Form.png)
@@ -58,7 +76,7 @@ class User extends Model {
 }
 ```
 
-### Create a Action
+### Create an Action
 In order to attach an action to your workflows, you will have to create a class within the `App\Jobs\Actions` folder. The class must extend the `BaseAction` class. This requires you to implement the `handle` method. This method will be called when the workflow is executed.
 
 The action class is very similar to a job.
@@ -88,11 +106,58 @@ class TestAction extends BaseAction
     {
         \Log::info($this->user->name . ' was created at ' . $this->user->created_at);
     }
+    
+    // Will be later used in the Logs (coming soon) 
+    public function getActionName(): string
+    {
+        return 'Der Hackfleisch hassender Zerhacker';
+    }
+
+    public function getActionDescription(): string
+    {
+        return 'Schneidet Kopfsalat. Und das nachts :)';
+    }
+
+    public function getActionCategory(): string
+    {
+        return 'Default-Category';
+    }
+
+    public function getActionIcon(): string
+    {
+        return 'heroicon-o-adjustments';
+    }
 }
 ```
 
 That's it. Now you can create and attach actions to your workflows.
 
+## Configuration
+
+### Define searchable field
+
+If you don't just want to search for the `id`, you can use the function `getTitleColumnForWorkflowSearch` within your model to search in another field as well.
+
+```php
+    public function getTitleColumnForWorkflowSearch(): ?string
+    {
+        return 'name';
+    }
+```
+
+### Max Search Results
+In case you want to change the max search results for the models, you can publish the config file and change the `workflows.search.max_results` value (defaults to 100).
+This can come in handy when you have a lot of models and the search is slow.
+
+```php
+<?php
+
+return [
+    'search' => [
+        'max_results' => 100,
+    ]
+];
+```
 
 ## Testing
 

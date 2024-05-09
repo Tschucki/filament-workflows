@@ -2,6 +2,21 @@
 
 All notable changes to `filament-workflows` will be documented in this file.
 
+## 0.0.3 - 2024-05-09
+
+### What's Changed
+
+* Add Laravel 11 Support (https://github.com/Tschucki/filament-workflows/issues/8)
+* Fix Search
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/Tschucki/filament-workflows/pull/6
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/Tschucki/filament-workflows/pull/3
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/Tschucki/filament-workflows/pull/6
+
+**Full Changelog**: https://github.com/Tschucki/filament-workflows/compare/0.0.2...0.0.3
+
 ## 0.0.2 - 2024-02-25
 
 - Add possibility to define max search results

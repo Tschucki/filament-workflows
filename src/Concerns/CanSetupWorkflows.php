@@ -113,7 +113,7 @@ trait CanSetupWorkflows
                     return [
                         $model->getKey() => $model->getTitelAttributeForWorkflow(),
                     ];
-                });
+                })->toArray();
             }
 
             return $model::take($iMaxResults)->get()->mapWithKeys(function ($model) {

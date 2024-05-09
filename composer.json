@@ -1,7 +1,7 @@
 {
     "name": "tschucki/filament-workflows",
     "description": "Add workflows to your filament app",
-    "version" : "0.0.2",
+    "version" : "0.0.3",
     "keywords": [
         "Tschucki",
         "laravel",

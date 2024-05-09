@@ -2,6 +2,16 @@
 
 All notable changes to `filament-workflows` will be documented in this file.
 
+## 0.0.4 - 2024-05-09
+
+Update Version
+
+### What's Changed
+
+* Laravel 11 support & Fix search error by @Tschucki in https://github.com/Tschucki/filament-workflows/pull/9
+
+**Full Changelog**: https://github.com/Tschucki/filament-workflows/compare/0.0.3...0.0.4
+
 ## 0.0.3 - 2024-05-09
 
 ### What's Changed

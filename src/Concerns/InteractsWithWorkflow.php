@@ -17,14 +17,27 @@ trait InteractsWithWorkflow
         return $this->morphMany(Workflow::class, 'model');
     }
 
-    public function getWorkflows()
+      public function getWorkflows()
     {
-        if ($this->model_id === null) {
+
+        //IF I ASSIGN A MODEL_ID TO A WORKFLOW FIRST WAS NOT WORKING FOR ME.
+
+        //this is the edit
+        if ($this->workflows()->exists()) {
+            return $this->workflows()->get();
+        }
+        else {
             return Workflow::where('model_id', null)->where('model_type', self::class)->get();
         }
 
-        return $this->workflows;
+        //THIS RETURN NULL ALSO IF I ASSIGN A MODEL_ID TO THE WORKFLOW
+        // if ($this->model_id === null) {
+        //     return Workflow::where('model_id', null)->where('model_type', self::class)->get();
+        // }
+
+        // return $this->workflows;
     }
+
 
     public function getModelTitelForWorkflow(): string
     {

@@ -2,23 +2,24 @@
 
 namespace Tschucki\FilamentWorkflows\Support;
 
-use Illuminate\Support\Str;
-
+use Tschucki\FilamentWorkflows\Models\Workflow;
+use Tschucki\FilamentWorkflows\Models\WorkflowLog;
+use Tschucki\FilamentWorkflows\Resources\FilamentWorkflowResource;
 
 class Utils
 {
     public static function getWorkflowModel(): string
     {
-        return config('workflows.register.models.workflow', \Tschucki\FilamentWorkflows\Models\Workflow::class);
+        return config('workflows.models.workflow', Workflow::class);
     }
 
     public static function getWorkflowLogModel(): string
     {
-        return config('workflows.register.models.workflow_log', \Tschucki\FilamentWorkflows\Models\WorkflowLog::class);
+        return config('workflows.models.workflow_log', WorkflowLog::class);
     }
 
     public static function getWorkflowResource(): string
     {
-        return config('workflows.register.resources.workflow', \Tschucki\FilamentWorkflows\Resources\FilamentWorkflowResource::class);
+        return config('workflows.resources.workflow', FilamentWorkflowResource::class);
     }
 }

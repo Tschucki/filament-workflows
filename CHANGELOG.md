@@ -2,6 +2,12 @@
 
 All notable changes to `filament-workflows` will be documented in this file.
 
+## 0.0.5 - 2024-10-07
+
+### What's Changed
+
+* Extended config functionality to allow for custom models and resources by @AJMarquez99
+
 ## 0.0.4 - 2024-05-09
 
 Update Version

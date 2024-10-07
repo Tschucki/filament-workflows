@@ -2,25 +2,25 @@
 
 namespace Tschucki\FilamentWorkflows\Concerns;
 
-use Tschucki\FilamentWorkflows\Models\Workflow;
-use Tschucki\FilamentWorkflows\Models\WorkflowLog;
+use Tschucki\FilamentWorkflows\Support\Utils;
 
 trait InteractsWithWorkflow
 {
     public function workflowLogs(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(WorkflowLog::class, 'model');
+        return $this->morphMany(Utils::getWorkflowLogModel(), 'model');
     }
 
     protected function workflows(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Workflow::class, 'model');
+        return $this->morphMany(Utils::getWorkflowModel(), 'model');
     }
 
     public function getWorkflows()
     {
+        $model = Utils::getWorkflowModel();
         if ($this->model_id === null) {
-            return Workflow::where('model_id', null)->where('model_type', self::class)->get();
+            return (new $model)::where('model_id', null)->where('model_type', self::class)->get();
         }
 
         return $this->workflows;

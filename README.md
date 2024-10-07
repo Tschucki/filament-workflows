@@ -159,10 +159,23 @@ return [
 ];
 ```
 
-## Testing
+### Use Custom Models and Resources
+If you want to use custom models and resources, you can publish the config file and change the `workflow.register.models` and `workflow.register.resources` values. It is highly recommended that custom models and resources extend the existing Workflow classes.
 
-```bash
-composer test
+```php
+<?php
+
+return [
+    'register' => [
+        'models' => [
+            'workflow' => \Tschucki\FilamentWorkflows\Models\WorkflowLog::class,
+            'workflow_log' => \Tschucki\FilamentWorkflows\Models\WorkflowLog::class,
+        ],
+        'resources' => [
+            'workflow' => \Tschucki\FilamentWorkflows\Resources\FilamentWorkflowResource::class,
+        ],
+    ],
+];
 ```
 
 ## Changelog

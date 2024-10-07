@@ -55,9 +55,7 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void
-    {
-    }
+    public function packageRegistered(): void {}
 
     public function boot(): void
     {
@@ -91,7 +89,7 @@ class FilamentWorkflowsServiceProvider extends PackageServiceProvider
         }
 
         // Testing
-        Testable::mixin(new TestsFilamentWorkflows());
+        Testable::mixin(new TestsFilamentWorkflows);
     }
 
     protected function getAssetPackageName(): ?string

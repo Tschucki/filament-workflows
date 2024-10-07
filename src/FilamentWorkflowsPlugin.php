@@ -4,7 +4,6 @@ namespace Tschucki\FilamentWorkflows;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Tschucki\FilamentWorkflows\Resources\FilamentWorkflowResource;
 use Tschucki\FilamentWorkflows\Support\Utils;
 
 class FilamentWorkflowsPlugin implements Plugin

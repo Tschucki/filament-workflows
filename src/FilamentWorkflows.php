@@ -2,6 +2,4 @@
 
 namespace Tschucki\FilamentWorkflows;
 
-class FilamentWorkflows
-{
-}
+class FilamentWorkflows {}
